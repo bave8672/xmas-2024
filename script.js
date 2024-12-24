@@ -101,15 +101,41 @@ img.src = `static/scene_${sceneIndex + 1}.jpg`;
         } else if (el.classList.contains('drag-fixed')) {
             el.style['position'] = 'fixed';
         }
-        el.ontouchdown = el.onmousedown = function (e) {
-            grabbedEl = e.target;
-            oldX = e.pageX;
-            oldY = e.pageY;
-            var offset = getOffset(grabbedEl);
-            oldElX = offset.left;
-            oldElY = offset.top;
-            grabbedEl.classList.add('grabbed');
-        }
+        el.ontouchstart = function (e) {
+            handleTouchStart(e);
+        };
+        
+        el.onmousedown = function (e) {
+            handleMouseDown(e);
+        };
+    }
+
+    function handleTouchStart(e) {
+        grabbedEl = e.targetTouches[0].target;
+        oldX = e.targetTouches[0].pageX;
+        oldY = e.targetTouches[0].pageY;
+        var offset = getOffset(grabbedEl);
+        oldElX = offset.left;
+        oldElY = offset.top;
+        grabbedEl.classList.add('grabbed');
+    }
+    
+    function handleTouchMove(e) {
+        // Add your touch move logic here
+    }
+    
+    function handleTouchEnd(e) {
+        // Add your touch end logic here
+    }
+    
+    function handleMouseDown(e) {
+        grabbedEl = e.target;
+        oldX = e.pageX;
+        oldY = e.pageY;
+        var offset = getOffset(grabbedEl);
+        oldElX = offset.left;
+        oldElY = offset.top;
+        grabbedEl.classList.add('grabbed');
     }
 })();
 
@@ -124,7 +150,7 @@ let grabbedEl = false;
 let perspective = 1;
 
 // handle mousemove event
-document.ontouchmove = document.onmousemove = function (e) {
+document.onmousemove = function (e) {
     if (grabbedEl) {
         const dX = e.pageX - oldX;
         const dY = e.pageY - oldY;
@@ -145,6 +171,29 @@ document.ontouchmove = document.onmousemove = function (e) {
         }
     }
 }
+
+document.ontouchmove = function(e) {
+    if (grabbedEl) {
+        const dX = e.targetTouches[0].pageX - oldX;
+        const dY = e.targetTouches[0].pageY - oldY;
+        const newX = oldElX + dX;
+        const newY = oldElY + dY;
+
+        // Decrease size of the player as it moves further away
+        perspective = getPerspective(getYPercent(newY));
+        grabbedEl.style['transform'] = `scale(${perspective})`;
+        grabbedEl.style['left'] = newX + 'px';
+        grabbedEl.style['top'] = newY + 'px';
+
+        // If the element is dragged near to the start/end points of the scene, move to the next/previous scene
+        const xPercent = getXPercent(newX + PLAYER_SIZE * perspective / 2); // 200 is the width of the player
+        const yPercent = getYPercent(newY + PLAYER_SIZE * perspective / 2); // 200 is the height of the player
+        if (Math.abs(xPercent - scenes[sceneIndex].endx) < eps && Math.abs(yPercent - scenes[sceneIndex].endy) < eps) {
+            setScene(sceneIndex + 1);
+        }
+    }
+}
+
 
 function getPerspective(percenty) {
     return Math.min(1.2, Math.max(0.4, (2 * percenty / 100) - 0.4));
@@ -197,11 +246,9 @@ document.ontouchend = document.onmouseup = function (e) {
 }
 
 // disable clicking on mobile
-document.addEventListener('touchstart', function () {
-    document.onmousedown = function (e) {
-        e.preventDefault();
-    }
-});
+// document.addEventListener('touchstart', function (e) {
+//     e.preventDefault();
+// });
 
 // getoffset function http://stackoverflow.com/a/442474
 function getOffset(el) {
