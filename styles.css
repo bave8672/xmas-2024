@@ -1,0 +1,46 @@
+@font-face {
+  font-family: 'LastChristmas';
+  src: url('static/LastChristmas.otf') format('truetype');
+}
+
+body {
+  transition: background-image 1000ms;
+  padding: 5px;
+  font-family: 'LastChristmas';
+  -webkit-touch-callout: none;
+  -webkit-user-select: none;
+  -khtml-user-select: none;
+  -moz-user-select: none;
+  -ms-user-select: none;
+  user-select: none;
+}
+
+h1 {
+  /* font-size: 2rem; */
+  padding: 0;
+  margin: 0;
+}
+
+p {
+  /* font-size: 2rem; */
+}
+
+.menu {
+  background-color: rgba(256, 256, 256, 50%);
+  padding: 20px;
+  display: inline-block;
+  padding: 20px;
+}
+
+.player { 
+  width: 200px;
+  height: 200px;
+  background-size: 200px 200px;
+  background-repeat: no-repeat;
+  transition: opacity 500ms;
+  opacity: 0;
+}
+
+#sound, #help {
+  cursor: pointer;
+}
