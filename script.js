@@ -55,7 +55,7 @@ const description = document.querySelector('p');
 let cooloff = false;
 
 const scenes = [
-    { name: 'Santa’s Workshop', description: 'Navigate through bustling elves assembling toys. Find the glowing gear hidden near the conveyor belts.', startx: 5, starty: 50, endx: 80, endy: 52 },
+    { name: 'Santa’s Workshop', description: 'Navigate through bustling elves assembling toys. Find the glowing gear hidden near the conveyor belts.', startx: 40, starty: 74, endx: 80, endy: 52 },
     { name: 'The Snowy Forest', description: 'Traverse a serene, snow-covered woodland, avoiding frosty wind gusts. Look for a twinkling star fragment near an old pine tree.', startx: 10, starty: 80, endx: 72, endy: 81 },
     { name: 'Candy Cane Lane', description: 'Cross a path of oversized candy canes and gumdrop puddles. Retrieve the spirit fragment lodged in a giant marshmallow.', startx: 30, starty: 40, endx: 71, endy: 53 },
     { name: 'The Gingerbread Village', description: 'Move through gingerbread houses and frosted cookie bridges. Help a gingerbread man rebuild a broken candy cane fence to earn a fragment.', startx: 35, starty: 76, endx: 78, endy: 76 },
