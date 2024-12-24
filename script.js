@@ -2,6 +2,9 @@
 
 const players = [
     'domingo_terhe_clark',
+    'linda',
+    'zuri',
+    'kaia',
     'katie_kit_garman',
     'kingsley_aves',
     'sally_garman',
@@ -72,9 +75,9 @@ const scenes = [
 ]
 
 let sceneIndex = -1; // current background
+// Preload next background
 let img = new Image(); // Lazy load new backgrounds
 img.src = `static/scene_${sceneIndex + 1}.jpg`;
-document.body.background = `static/scene_${sceneIndex}.jpg`;
 
 /**
  *
@@ -170,7 +173,7 @@ Merry Christmas, ${userName}! Love you very much and hope you have a wonderful C
     cooloff = true;
     sceneIndex = _sceneIndex;
     document.body.style['background-image'] = `url(static/scene_${sceneIndex}.jpg)`;
-    var img = new Image(); // Lazy load new backgrounds
+    var img = new Image(); // Preload
     img.src = `url(static/scene_${sceneIndex + 1}.jpg)`;
     player.style['opacity'] = 0;
     window.setTimeout(function () {
